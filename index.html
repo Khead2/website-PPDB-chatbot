@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg bg-dark py-3 fixed-top">
+        <div class="container">
+          <a class="fs-4 fw-bold navbar-brand text-white" href="#">PPDB ONLINE</a>
+          <button class="navbar-toggler bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="true" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+              </svg>
+          </button>
+          <div class="collapse navbar-collapse justify-content-center " id="navbarTogglerDemo02">
+            <ul class="navbar-nav mb-2 mb-lg-0 fw-bold">
+                <li class="nav-item fw"><a href="#alur" class="nav-link text-white active">ALUR PENDAFTARAN</a></li>
+                <li class="nav-item"><a href="#formulir" class="nav-link text-white">FORMULIR PENERIMAAN</a></li>
+                <li class="nav-item"><a href="#kompetensi" class="nav-link text-white">KOMPETENSI KEAHLIAN</a></li>
+                <li class="nav-item"><a href="#daftarulang" class="nav-link text-white">DAFTAR ULANG</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <!-- <header class="bg-dark text-white py-3 fixed-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="fs-4 fw-bold">PPDB ONLINE</div>
+            <ul class="nav">
+                <li class="nav-item"><a href="#alur" class="nav-link text-white">ALUR PENDAFTARAN</a></li>
+                <li class="nav-item"><a href="#formulir" class="nav-link text-white">FORMULIR PENERIMAAN</a></li>
+                <li class="nav-item"><a href="#kompetensi" class="nav-link text-white">KOMPETENSI KEAHLIAN</a></li>
+                <li class="nav-item"><a href="#daftarulang" class="nav-link text-white">DAFTAR ULANG</a></li>
+            </ul>
+        </div>
+    </header> -->
+
+    <!-- Hero Section -->
+    
+    <main>
+        <section class="bg-warning text-center py-5" style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+            <div class="container"style="width: auto;">
+                <img src="kesatrian.png" class="mb-3" style="max-width: 200px; height: auto;">
+                <h1 class="display-5 fw-bold">PENERIMAAN SISWA BARU</h1>
+                <p class="lead">SMK KESATRIAN PURWOKERTO TA 2024/2025</p>
+            </div>
+        </section>
+        <section id="alur" class="py-5 bg-light" style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+            <div class="container">
+                <h2 class="text-center fw-bold mb-4">Alur Pendaftaran</h2>
+                <div class="row">
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <img src="{{ url_for('static', filename='Image/step1.png') }}" alt="Step 1" class="mb-3" style="width: 60px;">
+                                <h5 class="card-title">1. ISI FORM PENDAFTARAN</h5>
+                                <p class="card-text">Isi formulir pendaftaran dengan melengkapi persyaratan yang dibutuhkan</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <img src="{{ url_for('static', filename='Image/step2.png') }}" alt="Step 2" class="mb-3" style="width: 60px;">
+                                <h5 class="card-title">2. DOWNLOAD BUKTI PENDAFTARAN</h5>
+                                <p class="card-text">Download berkas bukti pendaftaran</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <img src="{{ url_for('static', filename='Image/step3.png') }}" alt="Step 3" class="mb-3" style="width: 60px;">
+                                <h5 class="card-title">3. PENGUMUMAN DITERIMA</h5>
+                                <p class="card-text">Masuk ke MENU Pengumuman untuk cek konfirmasi daftar ulang dan Pengumuman</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <img src="{{ url_for('static', filename='Image/step4.png') }}" alt="Step 4" class="mb-3" style="width: 60px;">
+                                <h5 class="card-title">4. DAFTAR ULANG</h5>
+                                <p class="card-text">Petugas akan mendatangi anda untuk membatu proses</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <img src="{{ url_for('static', filename='Image/step4.png') }}" alt="Step 4" class="mb-3" style="width: 60px;">
+                                <h5 class="card-title">5. UPLOAD BUKTI DAFTAR ULANG</h5>
+                                <p class="card-text">Upload berkas daftar ulang yang dilakukan mandiri/petugas pada menu daftar ulang </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Chatbot Icon -->
+    <div class="chat-icon" id="chat-icon">
+        💬
+    </div>
+
+    <!-- Chatbot Container -->
+    <div class="chat-container card" id="chat-container">
+        <div class="card-header bg-success text-white d-flex justify-content-between">
+            <h5 class="mb-0">Chatbot</h5>
+            <button id="close-btn" class="btn btn-sm btn-light">×</button>
+        </div>
+        <div class="card-body overflow-auto" id="chat-box" style="max-height: 300px;">
+            <!-- Chat messages will appear here -->
+        </div>
+        <div class="card-footer d-flex">
+            <input type="text" id="user-input" class="form-control me-2" placeholder="Ketik pesan Anda...">
+            <button id="send-btn" class="btn btn-success">Kirim</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const chatIcon = document.getElementById("chat-icon");
+        const chatContainer = document.getElementById("chat-container");
+        const closeBtn = document.getElementById("close-btn");
+        const sendBtn = document.getElementById("send-btn");
+        const chatBox = document.getElementById("chat-box");
+        const userInput = document.getElementById("user-input");
+
+        // Show chatbot when icon is clicked
+        chatIcon.addEventListener("click", () => {
+            chatContainer.style.display = "block";
+            chatIcon.style.display = "none";
+        });
+
+        // Hide chatbot when close button is clicked
+        closeBtn.addEventListener("click", () => {
+            chatContainer.style.display = "none";
+            chatIcon.style.display = "flex";
+        });
+
+        // Send user message
+        sendBtn.addEventListener("click", () => {
+            const userMessage = userInput.value.trim();
+            if (!userMessage) return;
+
+            // Display user message
+            const userMessageDiv = document.createElement("div");
+            userMessageDiv.className = "user-message";
+            userMessageDiv.textContent = userMessage;
+            chatBox.appendChild(userMessageDiv);
+
+            // Clear input
+            userInput.value = "";
+
+            // Fetch chatbot response
+            fetch("http://127.0.0.1:5000/get_response", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userMessage })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const botMessageDiv = document.createElement("div");
+                    botMessageDiv.className = "bot-message";
+                    botMessageDiv.textContent = data.response;
+                    chatBox.appendChild(botMessageDiv);
+
+                    // Scroll to the bottom
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                });
+        });
+    </script>
+</body>
+</html>
