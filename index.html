@@ -142,18 +142,7 @@
         const initialMessageDiv = document.createElement("div");
         initialMessageDiv.className = "bot-message";
         initialMessageDiv.innerHTML = `
-            <strong>Halo! Saya Chatbot PPDB Online.</strong><br>
-            Berikut adalah beberapa hal yang bisa saya bantu:
-            <ul>
-                <li>Menjelaskan alur pendaftaran</li>
-                <li>Membantu dengan formulir pendaftaran</li>
-                <li>Informasi Jurusan yang ada di sekolah</li>
-                <li>Pengumuman Diterima</li>
-                <li>Informasi daftar ulang</li>
-                <li>Fasilitas sekolah</li>
-                <li>Dan lain-lain</li>
-            </ul>
-            Silakan ketik pertanyaan Anda di bawah.
+            Hallo 👋
         `;
         chatBox.appendChild(initialMessageDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
@@ -166,68 +155,78 @@
             chatIcon.style.display = "flex";
         });
     
-        // Send user message
-        sendBtn.addEventListener("click", () => {
-            const userMessage = userInput.value.trim();
-            if (!userMessage) return;
-    
-            // Display user message
-            const userMessageDiv = document.createElement("div");
-            userMessageDiv.className = "user-message";
-            userMessageDiv.textContent = userMessage;
-            chatBox.appendChild(userMessageDiv);
-    
-            // Clear input
-            userInput.value = "";
-    
-            // Show waiting message
-            const waitingDiv = document.createElement("div");
-            waitingDiv.className = "waiting-message text-muted";
-            waitingDiv.textContent = "Menunggu respons...";
-            chatBox.appendChild(waitingDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
-    
-            // Fetch chatbot response
-            fetch("https://habdulghani-model-chatbot.hf.space/get_response", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ message: userMessage })
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Remove waiting message
-                chatBox.removeChild(waitingDiv);
-    
-                const botMessageDiv = document.createElement("div");
-                botMessageDiv.className = "bot-message";
-    
-                // Replace \n with <br> to ensure new lines are rendered correctly
-                let formattedResponse = data.response.replace(/\n/g, '<br>');
-    
-                // Check if there is a link and make it clickable
-                formattedResponse = formattedResponse.replace(
-                    /(https?:\/\/[^\s]+)/g, 
-                    '<a href="$1" target="_blank">$1</a>'
-                );
-    
-                botMessageDiv.innerHTML = formattedResponse;
-    
-                chatBox.appendChild(botMessageDiv);
-    
-                // Scroll to the bottom
-                chatBox.scrollTop = chatBox.scrollHeight;
-            })
-            .catch(() => {
-                // Remove waiting message and show error if fetch fails
-                chatBox.removeChild(waitingDiv);
-                const errorDiv = document.createElement("div");
-                errorDiv.className = "bot-message text-danger";
-                errorDiv.textContent = "Maaf, terjadi kesalahan. Coba lagi nanti.";
-                chatBox.appendChild(errorDiv);
-            });
-        });
+        // Function to send a message
+function sendMessage() {
+    const userMessage = userInput.value.trim();
+    if (!userMessage) return;
+
+    // Display user message
+    const userMessageDiv = document.createElement("div");
+    userMessageDiv.className = "user-message";
+    userMessageDiv.textContent = userMessage;
+    chatBox.appendChild(userMessageDiv);
+
+    // Clear input
+    userInput.value = "";
+
+    // Show waiting message
+    const waitingDiv = document.createElement("div");
+    waitingDiv.className = "waiting-message text-muted";
+    waitingDiv.textContent = "Menunggu respons...";
+    chatBox.appendChild(waitingDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Fetch chatbot response
+    fetch("https://habdulghani-model-chatbot.hf.space/get_response", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: userMessage })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Remove waiting message
+        chatBox.removeChild(waitingDiv);
+
+        const botMessageDiv = document.createElement("div");
+        botMessageDiv.className = "bot-message";
+
+        // Replace \n with <br> to ensure new lines are rendered correctly
+        let formattedResponse = data.response.replace(/\n/g, '<br>');
+
+        // Check if there is a link and make it clickable
+        formattedResponse = formattedResponse.replace(
+            /(https?:\/\/[^\s]+)/g, 
+            '<a href="$1" target="_blank">$1</a>'
+        );
+
+        botMessageDiv.innerHTML = formattedResponse;
+
+        chatBox.appendChild(botMessageDiv);
+
+        // Scroll to the bottom
+        chatBox.scrollTop = chatBox.scrollHeight;
+    })
+    .catch(() => {
+        // Remove waiting message and show error if fetch fails
+        chatBox.removeChild(waitingDiv);
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "bot-message text-danger";
+        errorDiv.textContent = "Maaf, terjadi kesalahan. Coba lagi nanti.";
+        chatBox.appendChild(errorDiv);
+    });
+}
+
+// Add event listener for "Send" button
+sendBtn.addEventListener("click", sendMessage);
+
+// Add event listener for pressing "Enter" key
+userInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
     </script>    
 </body>
 </html>
