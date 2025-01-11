@@ -49,7 +49,7 @@ body {
     position: fixed;
     bottom: 0;
     right: 20px;
-    width: 400px;
+    width: 550px;
     max-height: 80vh; /* Sesuaikan dengan tinggi layar */
     background-color: white;
     border: 1px solid #ddd;
@@ -178,5 +178,28 @@ body {
 
     .chat-footer button {
         font-size: 12px;
+    }
+}
+.common-questions button {
+    padding: 4px 8px; /* Mengurangi padding tombol */
+    font-size: 12px; /* Mengurangi ukuran teks */
+    line-height: 1.2; /* Menyesuaikan tinggi tombol */
+}
+.common-questions {
+    white-space: normal; /* Default: konten bisa wrap (untuk laptop) */
+    display: flex; 
+    flex-wrap: wrap; /* Memastikan tombol diatur ke baris baru jika ada ruang */
+    gap: 6px; /* Jarak antar tombol lebih kecil */
+}
+
+@media (max-width: 768px) { /* Untuk perangkat dengan lebar layar 768px atau lebih kecil */
+    .common-questions {
+        white-space: nowrap; /* Konten tidak wrap */
+        overflow-x: auto; /* Scroll horizontal */
+        flex-wrap: nowrap; /* Memastikan tombol tetap dalam satu baris */
+    }
+
+    .common-questions::-webkit-scrollbar {
+        display: none; /* Sembunyikan scrollbar */
     }
 }
