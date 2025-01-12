@@ -32,7 +32,7 @@ body {
     height: 50px;
     background-color: #118B50;
     color: white;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     border-radius: 50%;

@@ -102,51 +102,62 @@
     </main>
 
 
-    <!-- Chatbot Icon -->
-    <div class="chat-icon" id="chatbot-icon">
-        💬
+   <!-- Chatbot Container -->
+<div class="chat-container card" id="chat-container">
+    <div class="card-header bg-success text-white d-flex justify-content-between">
+        <h5 class="mb-0">Chatbot</h5>
+        <button id="close-chatbot" class="btn btn-sm btn-light">×</button>
+    </div>
+    <div class="card-body overflow-auto" id="chat-box" style="height: 350px;">
+        <!-- Chat messages will appear here -->
     </div>
 
-    <!-- Chatbot Container -->
-    <div class="chat-container card" id="chat-container" style="display: none;">
-        <div class="card-header bg-success text-white d-flex justify-content-between">
-            <h5 class="mb-0">Chatbot</h5>
-            <button id="close-chatbot" class="btn btn-sm btn-light">×</button>
-        </div>
-        <div class="card-body overflow-auto" id="chat-box" style="height: 350px;">
-            <!-- Chat messages will appear here -->
-        </div>
-
-         <!-- Common Questions Row -->
-          
-
-     <div class="common-questions px-3 py-2 justify-content-md-center">
+    <!-- Common Questions Row -->
+    <div class="common-questions px-3 py-2 justify-content-md-center">
         <button class="btn btn-outline-secondary btn-sm d-inline-block question-btn">Cara daftar sekolah</button>
         <button class="btn btn-outline-secondary btn-sm d-inline-block question-btn">Syarat Pendaftaran</button>
         <button class="btn btn-outline-secondary btn-sm d-inline-block question-btn">Jadwal PPDB</button>
         <button class="btn btn-outline-secondary btn-sm d-inline-block question-btn">formulir pendaftaran</button>
     </div>
 
-
-        <div class="chat-footer d-flex align-items-center" id="chat-footer">
-            <input type="text" id="user-input" placeholder="Ketik pesan Anda..." class="form-control" />
-            <button id="send-btn" class="btn btn-success">Kirim</button>
-        </div>        
+    <div class="chat-footer d-flex align-items-center" id="chat-footer">
+        <input type="text" id="user-input" placeholder="Ketik pesan Anda..." class="form-control" />
+        <button id="send-btn" class="btn btn-success">Kirim</button>
     </div>
+</div>
+
+<!-- Chatbot Icon -->
+<div class="chat-icon" id="chatbot-icon" style="display: none;">
+    💬
+</div>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const chatIcon = document.getElementById("chatbot-icon");
-        const chatContainer = document.getElementById("chat-container");
-        const closeBtn = document.getElementById("close-chatbot");
-        const sendBtn = document.getElementById("send-btn");
-        const chatBox = document.getElementById("chat-box");
-        const userInput = document.getElementById("user-input");
+const chatContainer = document.getElementById("chat-container");
+const closeBtn = document.getElementById("close-chatbot");
+const sendBtn = document.getElementById("send-btn");
+const chatBox = document.getElementById("chat-box");
+const userInput = document.getElementById("user-input");
+
+// Hide chatbot and show icon when close button is clicked
+closeBtn.addEventListener("click", () => {
+    chatContainer.style.display = "none";
+    chatIcon.style.display = "flex";
+});
+const initialMessageDiv = document.createElement("div");
+        initialMessageDiv.className = "bot-message";
+        initialMessageDiv.innerHTML = `
+            Hallo 👋
+        `;
+        chatBox.appendChild(initialMessageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
     
-        // Show chatbot when icon is clicked
-        chatIcon.addEventListener("click", () => {
-            chatContainer.style.display = "block";
+
+// Show chatbot and hide icon when chat icon is clicked
+chatIcon.addEventListener("click", () => {
+    chatContainer.style.display = "flex";
     chatIcon.style.display = "none";
 
     // Cek apakah ini pertama kali chatbot dibuka
@@ -159,15 +170,9 @@
         chatBox.appendChild(initialMessageDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
     }
-        });
+});
     
-        // Hide chatbot when close button is clicked
-        closeBtn.addEventListener("click", () => {
-            chatContainer.style.display = "none";
-            chatIcon.style.display = "flex";
-        });
-    
-        document.querySelectorAll('.question-btn').forEach(button => {
+    document.querySelectorAll('.question-btn').forEach(button => {
     button.addEventListener('click', function() {
         const question = this.textContent;
         const userInput = document.getElementById('user-input');
