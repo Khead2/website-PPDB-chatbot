@@ -49,7 +49,7 @@ body {
     position: fixed;
     bottom: 0;
     right: 20px;
-    width: 550px;
+    width: 500px;
     max-height: 80vh; /* Sesuaikan dengan tinggi layar */
     background-color: white;
     border: 1px solid #ddd;
@@ -186,10 +186,19 @@ body {
     line-height: 1.2; /* Menyesuaikan tinggi tombol */
 }
 .common-questions {
-    white-space: normal; /* Default: konten bisa wrap (untuk laptop) */
-    display: flex; 
-    flex-wrap: wrap; /* Memastikan tombol diatur ke baris baru jika ada ruang */
-    gap: 6px; /* Jarak antar tombol lebih kecil */
+    display: flex;
+    flex-wrap: nowrap; /* Membuat tombol tetap dalam satu baris */
+    gap: 6px; /* Memberikan jarak antar tombol */
+    overflow-x: auto; /* Scroll horizontal jika konten melampaui lebar */
+    padding-bottom: 5px; /* Tambahkan sedikit jarak di bawah untuk estetika */
+    white-space: nowrap; /* Mencegah konten membungkus */
+}
+.common-questions::-webkit-scrollbar {
+    height: 5px; /* Atur ukuran scrollbar */
+}
+.common-questions::-webkit-scrollbar-thumb {
+    background: #ccc; /* Warna scrollbar */
+    border-radius: 10px; /* Membuatnya bulat */
 }
 
 @media (max-width: 768px) { /* Untuk perangkat dengan lebar layar 768px atau lebih kecil */
