@@ -103,10 +103,13 @@
 
 
    <!-- Chatbot Container -->
-<div class="chat-container card" id="chat-container">
-    <div class="card-header bg-success text-white d-flex justify-content-between">
+<div class="chat-container card" id="chat-container" style="display: none;">
+    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Chatbot</h5>
-        <button id="close-chatbot" class="btn btn-sm btn-light">×</button>
+        <div class="d-flex gap-1">
+            <button id="minimize-chatbot" class="btn btn-sm btn-light">−</button>
+            <button id="close-chatbot" class="btn btn-sm btn-light">×</button>
+        </div>
     </div>
     <div class="card-body overflow-auto" id="chat-box" style="height: 350px;">
         <!-- Chat messages will appear here -->
@@ -126,9 +129,9 @@
     </div>
 </div>
 
-<!-- Chatbot Icon -->
-<div class="chat-icon" id="chatbot-icon" style="display: none;">
+<div class="chat-icon" id="chatbot-icon" style="display: flex;">
     💬
+    <div class="chat-tooltip" id="chat-tooltip">Butuh bantuan? Klik di sini!</div>
 </div>
 
     <!-- Bootstrap JS Bundle -->
@@ -140,26 +143,64 @@ const closeBtn = document.getElementById("close-chatbot");
 const sendBtn = document.getElementById("send-btn");
 const chatBox = document.getElementById("chat-box");
 const userInput = document.getElementById("user-input");
+const minimizeBtn = document.getElementById("minimize-chatbot");
+const chatFooter = document.getElementById("chat-footer");
 
 // Hide chatbot and show icon when close button is clicked
-closeBtn.addEventListener("click", () => {
-    chatContainer.style.display = "none";
-    chatIcon.style.display = "flex";
-});
-const initialMessageDiv = document.createElement("div");
+// Fungsi untuk minimize chat
+    minimizeBtn.addEventListener("click", () => {
+            // Sembunyikan chat container
+            chatContainer.style.display = "none";
+
+            // Tampilkan kembali ikon chat
+            chatIcon.style.display = "flex";
+        
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+    const tooltip = document.getElementById("chat-tooltip");
+
+    // Tampilkan tooltip setelah 3 detik
+    setTimeout(() => {
+        tooltip.style.display = "block";
+    }, 0);
+
+    // Sembunyikan tooltip setelah 5 detik
+    setTimeout(() => {
+        tooltip.style.display = "none";
+    }, 8000);
+}); 
+    // Fungsi untuk konfirmasi dan menghapus riwayat chat
+    closeBtn.addEventListener("click", () => {
+    const confirmation = confirm("Apakah Anda yakin akan mengakhiri chat?");
+    if (confirmation) {
+        // Hapus semua pesan di chatBox
+        chatBox.innerHTML = "";
+
+        // Tambahkan pesan awal "Halo 👋"
+        const initialMessageDiv = document.createElement("div");
         initialMessageDiv.className = "bot-message";
-        initialMessageDiv.innerHTML = `
-            Hallo 👋
-        `;
+        initialMessageDiv.textContent = "Hallo 👋";
+
         chatBox.appendChild(initialMessageDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    
 
-// Show chatbot and hide icon when chat icon is clicked
-chatIcon.addEventListener("click", () => {
-    chatContainer.style.display = "flex";
-    chatIcon.style.display = "none";
+        // Sembunyikan chat container
+        chatContainer.style.display = "none";
 
+        // Tampilkan kembali ikon chat
+        chatIcon.style.display = "flex";
+    }
+});
+// Klik ikon chatbot untuk menampilkan chatbot
+    chatIcon.addEventListener("click", () => {
+        chatContainer.style.display = "flex"; // Tampilkan chatbot
+        chatIcon.style.display = "none"; // Sembunyikan ikon
+    });
+
+    // Klik tombol tutup untuk menyembunyikan chatbot
+    closeBtn.addEventListener("click", () => {
+        chatContainer.style.display = "none"; // Sembunyikan chatbot
+        chatIcon.style.display = "flex"; // Tampilkan ikon
+    });
     // Cek apakah ini pertama kali chatbot dibuka
     if (!chatBox.querySelector(".bot-message")) {
         const initialMessageDiv = document.createElement("div");
@@ -170,7 +211,7 @@ chatIcon.addEventListener("click", () => {
         chatBox.appendChild(initialMessageDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
     }
-});
+
     
     document.querySelectorAll('.question-btn').forEach(button => {
     button.addEventListener('click', function() {
@@ -179,9 +220,10 @@ chatIcon.addEventListener("click", () => {
         userInput.value = question; // Isi input dengan teks tombol
         document.getElementById('send-btn').click(); // Kirim otomatis
     });
-});
-    
+});// Tampilkan chatbot setelah 5 detik
+
         // Function to send a message
+// Function to send a message
 function sendMessage() {
     const userMessage = userInput.value.trim();
     if (!userMessage) return;
@@ -206,42 +248,34 @@ function sendMessage() {
     fetch("https://habdulghani-model-chatbot.hf.space/get_response", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: userMessage })
+        body: JSON.stringify({ message: userMessage }),
     })
-    .then(response => response.json())
-    .then(data => {
-        // Remove waiting message
-        chatBox.removeChild(waitingDiv);
+        .then((response) => response.json())
+        .then((data) => {
+            // Remove waiting message
+            chatBox.removeChild(waitingDiv);
 
-        const botMessageDiv = document.createElement("div");
-        botMessageDiv.className = "bot-message";
+            const botMessageDiv = document.createElement("div");
+            botMessageDiv.className = "bot-message";
 
-        // Replace \n with <br> to ensure new lines are rendered correctly
-        let formattedResponse = data.response.replace(/\n/g, '<br>');
+            // Set response with proper HTML formatting
+            botMessageDiv.innerHTML = data.response;
 
-        // Check if there is a link and make it clickable
-        formattedResponse = formattedResponse.replace(
-            /(https?:\/\/[^\s]+)/g, 
-            '<a href="$1" target="_blank">$1</a>'
-        );
+            chatBox.appendChild(botMessageDiv);
 
-        botMessageDiv.innerHTML = formattedResponse;
-
-        chatBox.appendChild(botMessageDiv);
-
-        // Scroll to the bottom
-        chatBox.scrollTop = chatBox.scrollHeight;
-    })
-    .catch(() => {
-        // Remove waiting message and show error if fetch fails
-        chatBox.removeChild(waitingDiv);
-        const errorDiv = document.createElement("div");
-        errorDiv.className = "bot-message text-danger";
-        errorDiv.textContent = "Maaf, terjadi kesalahan. Coba lagi nanti.";
-        chatBox.appendChild(errorDiv);
-    });
+            // Scroll to the bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+        })
+        .catch(() => {
+            // Remove waiting message and show error if fetch fails
+            chatBox.removeChild(waitingDiv);
+            const errorDiv = document.createElement("div");
+            errorDiv.className = "bot-message text-danger";
+            errorDiv.textContent = "Maaf, terjadi kesalahan. Coba lagi nanti.";
+            chatBox.appendChild(errorDiv);
+        });
 }
 
 // Add event listener for "Send" button

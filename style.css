@@ -211,4 +211,24 @@ body {
     .common-questions::-webkit-scrollbar {
         display: none; /* Sembunyikan scrollbar */
     }
+}   
+
+.chat-tooltip {
+    position: absolute;
+    bottom: 60px; /* Sesuaikan jarak dari ikon */
+    right: 0;
+    background-color: #118B50;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Efek muncul perlahan */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
